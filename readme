@@ -1,0 +1,56 @@
+backend/
+├── src/
+│   ├── config/
+│   │   └── db.js
+│   ├── models/
+│   │   └── Invoice.js
+│   ├── controllers/
+│   │   └── invoice.controller.js
+│   ├── routes/
+│   │   └── invoice.routes.js
+│   ├── app.js
+│   └── server.js
+├── package.json
+└── .env
+
+DIAGRAMA COMPLETO FLUJO
+-----------------------
+Client (Postman / Frontend)
+        ↓
+     server.js
+        ↓
+      app.js
+        ↓
+ express.json()
+        ↓
+ invoice.routes.js
+        ↓
+ ┌───────────────────────────┐
+ │ Validation middleware     │   ← Punto 3
+ │ (express-validator)       │
+ └───────────┬───────────────┘
+             │
+      ¿Datos válidos?
+        │            │
+       NO           YES
+        │            │
+ throw Error     invoice.controller.js
+        │            ↓
+        │       lógica de negocio
+        │            ↓
+        │     ¿Error en ejecución?
+        │          │         │
+        │         NO        YES
+        │          │         │
+        │      res.json()   next(error)
+        │          │         │
+        └──────────┴─────────┘
+                   ↓
+             errorHandler.js   ← Punto 2
+                   ↓
+             res.json(error)
+
+punto 3: Validación de datos de entrada usando express-validator antes de que la solicitud llegue al controlador. 
+         Si los datos no son válidos, se lanza un error inmediatamente.
+punto 2: Middleware de manejo de errores que captura cualquier error lanzado en el flujo de la solicitud y 
+         envía una respuesta JSON con detalles del error.
