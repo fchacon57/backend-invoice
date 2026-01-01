@@ -1,17 +1,21 @@
-backend/
+backend-invoice/
+│
 ├── src/
-│   ├── config/
-│   │   └── db.js
-│   ├── models/
-│   │   └── Invoice.js
-│   ├── controllers/
-│   │   └── invoice.controller.js
-│   ├── routes/
-│   │   └── invoice.routes.js
 │   ├── app.js
-│   └── server.js
+│   ├── server.js
+│   ├── routes/
+│   ├── controllers/
+│   ├── services/
+│   ├── models/
+│   └── config/
+│
+├── tests/
+│
+├── .env.example
+├── .gitignore
 ├── package.json
-└── .env
+├── package-lock.json
+└── README.md
 
 DIAGRAMA COMPLETO FLUJO
 -----------------------
